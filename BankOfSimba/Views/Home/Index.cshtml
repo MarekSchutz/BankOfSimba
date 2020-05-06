@@ -1,0 +1,64 @@
+﻿@using BankOfSimba.Models
+@model List<BankAccount>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bank of Simba</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/Styles/styles.css" />
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header_logo">
+            <h1>Bank of Simba</h1>
+        </div>
+    </header>
+    <section class="data-view">
+        <table>
+            <tr class="data-view_header">
+                <td>Id</td>
+                <td>Name</td>
+                <td>Balance</td>
+                <td>Animal type</td>
+                <td>Owner type</td>
+                <td>Good or Bad</td>
+            </tr>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr style=@Model[i].Color>
+                    <td>@(i+1)</td>
+                    <td>@Model[i].Name</td>
+                    <td style="text-align: right;">@Model[i].Balance.ToString("0.00 Zb")</td>
+                    <td style="text-align: center;">@Model[i].AnimalType</td>
+                    <td>@(Model[i].IsKing ? "King" : "")</td>
+                    <td>@(Model[i].IsGood ? "Good one" : "Bad one")</td>
+                    @using (Html.BeginForm("AddBalance", "Home", FormMethod.Post))
+                    {
+                        <td><input type="hidden" name="id" value="@i" /></td>
+                        <td><input type="submit" class="btn-menu" value="MORE ZEBRAS" /></td>
+                    }
+                </tr>
+            }
+            <tr class="new-acc">
+                @using (Html.BeginForm("NewAccount", "Home", FormMethod.Post))
+                {
+                    <td></td>
+                    <td><input type="text" placeholder="Name" name="name"/></td>
+                    <td><input type="number" placeholder="Balance" name="balance" /></td>
+                    <td><input type="text" placeholder="Animal Type" name="animalType" /></td>
+                    <td>
+                        <select id="king" name="isKing">
+                            <option value="true">King</option>
+                            <option value="false">Not King</option>
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" id="btn-acc" value="Add new account" /></td>
+                }
+            </tr>
+        </table>
+    </section>
+</body>
+</html>
